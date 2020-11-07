@@ -32,7 +32,7 @@ class caracter
     string nume_caracter, movement;
     friend class item;
 public:
-        void adaugare(item item1)
+    void adaugare(item item1)
     {
         inventar.push_back(item1);
     }
@@ -57,17 +57,17 @@ public:
     ~caracter();
 };
 caracter::caracter( int level, std::string nume_caracter, std::string movement)
-    {
-        this->level=level;
-        this->nume_caracter=nume_caracter;
-        this->movement=movement;
-    }
+{
+    this->level=level;
+    this->nume_caracter=nume_caracter;
+    this->movement=movement;
+}
 caracter::caracter(caracter &ch)
-    {
-        this->level=ch.level;
-        this->nume_caracter=ch.nume_caracter;
-        this->movement=ch.movement;
-    }
+{
+    this->level=ch.level;
+    this->nume_caracter=ch.nume_caracter;
+    this->movement=ch.movement;
+}
 caracter::~caracter()
 {
     cout<<"You will not be remembered"<<'\n';
