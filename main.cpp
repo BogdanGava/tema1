@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
 // dark souls = joc rpg in care greutatea inventarului determina orice forma de miscare
 using namespace std;
 class item
@@ -10,16 +11,24 @@ class item
 public:
     void afisare()
     {
-        std::cout<<nume_item<<" "<<greutate<<'\n';
+        cout<<nume_item<<" "<<greutate<<'\n';
     }
-
+    item(std::string nume_item="none", float greutate=0);
+    ~item();
 };
-
+item::item(std::string nume_item, float greutate)
+{
+    this->nume_item=nume_item;
+    this->greutate=greutate;
+}
+item::~item()
+{
+    cout<<"Dropped"<<'\n';
+}
 class caracter
 {
     vector<item> inventar;
     int level;
-    float greutate; // dupa ce trece de 70, va scadea viteza pentru orice fel de movement
     string nume_caracter, movement;
     friend class item;
 public:
@@ -41,23 +50,21 @@ public:
 
     void afisare()
     {
-        std::cout<<level<<" "<<greutate<<" "<<nume_caracter<<" "<<movement<<'\n';
+        std::cout<<level<<" "<<" "<<nume_caracter<<" "<<movement<<'\n';
     }
-    caracter(int level=1, float greutate=0, std::string nume_caracter="none", std::string movement="normal" );
+    caracter(int level=1, std::string nume_caracter="none", std::string movement="normal" );
     caracter(caracter &);
     ~caracter();
 };
-caracter::caracter( int level, float greutate, std::string nume_caracter, std::string movement)
+caracter::caracter( int level, std::string nume_caracter, std::string movement)
     {
         this->level=level;
-        this->greutate=greutate;
         this->nume_caracter=nume_caracter;
         this->movement=movement;
     }
 caracter::caracter(caracter &ch)
     {
         this->level=ch.level;
-        this->greutate=ch.greutate;
         this->nume_caracter=ch.nume_caracter;
         this->movement=ch.movement;
     }
@@ -68,11 +75,14 @@ caracter::~caracter()
 }
 int main()
 {
-    caracter c1(12, 15.5, "Gwyn", "normal");
+    caracter c1(12, "Gwyn", "impaired");
     c1.afisare();
-    caracter c2(50, 90, "Gwyndolyn", "impaired");
+    caracter c2(50, "Gwyndolyn", "normal");
     c2.afisare();
+    item i1("Claymore", 25.6);
+    i1.afisare();
 
 
     return 0;
 }
+// scuze pentru romgleza
