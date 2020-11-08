@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <fstream>
 // dark souls = joc rpg in care greutatea inventarului determina orice forma de miscare
 using namespace std;
 class item
@@ -8,6 +7,7 @@ class item
     string nume_item;
     float greutate;
     friend class caracter;
+
 public:
     void afisare()
     {
@@ -16,25 +16,29 @@ public:
     item(std::string nume_item="none", float greutate=0);
     ~item();
 };
+
 item::item(std::string nume_item, float greutate)
 {
     this->nume_item=nume_item;
     this->greutate=greutate;
 }
+
 item::~item()
 {
     cout<<"Dropped"<<'\n';
 }
+
 class caracter
 {
     vector<item> inventar;
     int level;
     string nume_caracter, movement;
     friend class item;
+
 public:
-    void adaugare(item item1)
+    void adauga(item &item)
     {
-        inventar.push_back(item1);
+        inventar.push_back(item);
     }
 
     void calculare_movement()
@@ -52,27 +56,41 @@ public:
     {
         std::cout<<level<<" "<<" "<<nume_caracter<<" "<<movement<<'\n';
     }
+
     caracter(int level=1, std::string nume_caracter="none", std::string movement="normal" );
     caracter(caracter &);
+    caracter &operator =(const caracter &caracter);
     ~caracter();
 };
+
 caracter::caracter( int level, std::string nume_caracter, std::string movement)
 {
     this->level=level;
     this->nume_caracter=nume_caracter;
     this->movement=movement;
 }
-caracter::caracter(caracter &ch)
+
+caracter::caracter(caracter &caracter)
 {
-    this->level=ch.level;
-    this->nume_caracter=ch.nume_caracter;
-    this->movement=ch.movement;
+    this->level=caracter.level;
+    this->nume_caracter=caracter.nume_caracter;
+    this->movement=caracter.movement;
 }
+
+caracter & caracter::operator=(const caracter &caracter)
+{
+    level=caracter.level;
+    nume_caracter=caracter.nume_caracter;
+    movement=caracter.movement;
+    return *this;
+}
+
 caracter::~caracter()
 {
     cout<<"You will not be remembered"<<'\n';
 
 }
+
 int main()
 {
     caracter c1(12, "Gwyn", "impaired");
