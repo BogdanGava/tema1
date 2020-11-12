@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-// dark souls = joc rpg in care greutatea inventarului determina orice forma de miscare
+// dark souls = joc in care greutatea inventarului determina orice forma de miscare
 using namespace std;
 class item
 {
@@ -32,8 +32,20 @@ class caracter
 {
     vector<item> inventar;
     int level;
-    string nume_caracter, movement;
+    string nume_caracter;
     friend class item;
+    string calculare_movement()
+    {
+        string movement;
+        float greutate_totala=0;
+        for(int i=0; i<inventar.size(); ++i)
+            greutate_totala=greutate_totala+inventar[i].greutate;
+        if(greutate_totala>70)
+            movement="impaired";
+        else
+            movement="normal";
+        return movement;
+    }
 
 public:
     void adauga(item &item)
@@ -41,50 +53,43 @@ public:
         inventar.push_back(item);
     }
 
-    void calculare_movement()
-    {
-        int greutate_totala=0;
-        for(int i=0; i<inventar.size(); ++i)
-            greutate_totala=greutate_totala+inventar[i].greutate;
-        if(greutate_totala>70)
-            movement="impaired";
-        else
-            movement="normal";
-    }
 
     void afisare()
     {
-        std::cout<<level<<" "<<" "<<nume_caracter<<" "<<movement<<'\n';
+        std::cout<<level<<" "<<" "<<nume_caracter<<'\n';
     }
+    friend ostream& operator<<(ostream&,caracter&);
 
-    caracter(int level=1, std::string nume_caracter="none", std::string movement="normal" );
+    caracter(int level=1, std::string nume_caracter="none" );
     caracter(caracter &);
     caracter &operator =(const caracter &caracter);
     ~caracter();
 };
 
-caracter::caracter( int level, std::string nume_caracter, std::string movement)
+caracter::caracter( int level, std::string nume_caracter)
 {
     this->level=level;
     this->nume_caracter=nume_caracter;
-    this->movement=movement;
 }
 
 caracter::caracter(caracter &caracter)
 {
     this->level=caracter.level;
     this->nume_caracter=caracter.nume_caracter;
-    this->movement=caracter.movement;
 }
 
 caracter & caracter::operator=(const caracter &caracter)
 {
     level=caracter.level;
     nume_caracter=caracter.nume_caracter;
-    movement=caracter.movement;
     return *this;
 }
+std::ostream & operator<<(ostream& os, caracter& c)
+{
 
+    os<<"movement="<<c.calculare_movement()<<'\n'<<"level="<<c.level<<'\n'<<"nume_caracter="<<c.nume_caracter<<endl;
+    return os;
+}
 caracter::~caracter()
 {
     cout<<"You will not be remembered"<<'\n';
@@ -93,14 +98,15 @@ caracter::~caracter()
 
 int main()
 {
-    caracter c1(12, "Gwyn", "impaired");
-    c1.afisare();
-    caracter c2(50, "Gwyndolyn", "normal");
-    c2.afisare();
-    item i1("Claymore", 25.6);
+    caracter c1(12, "Gwyn" );
+    caracter c2(50, "Gwyndolyn");
+    item i1("Claymore", 35.6);
+    item i2("Frostmourne",35 );
     i1.afisare();
-
-
+    c1.adauga(i1);
+    c1.adauga(i2);
+    c2.adauga(i1);
+    cout<<c1;
+    cout<<c2;
     return 0;
 }
-// scuze pentru romgleza
