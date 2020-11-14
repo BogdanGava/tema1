@@ -36,11 +36,12 @@ class caracter
     friend class item;
     string calculare_movement()
     {
+        float const g=70;
         string movement;
         float greutate_totala=0;
         for(int i=0; i<inventar.size(); ++i)
             greutate_totala=greutate_totala+inventar[i].greutate;
-        if(greutate_totala>70)
+        if(greutate_totala>g)
             movement="impaired";
         else
             movement="normal";
@@ -52,7 +53,12 @@ public:
     {
         inventar.push_back(item);
     }
-
+    void sterge (item &item)
+    {
+        for (int i=0; i<inventar.size(); ++i)
+            if (inventar[i].nume_item==item.nume_item)
+                inventar.erase(inventar.begin()+i-1);
+    }
 
     void afisare()
     {
@@ -105,6 +111,8 @@ int main()
     i1.afisare();
     c1.adauga(i1);
     c1.adauga(i2);
+    c1.sterge(i2);
+    c2.adauga(i1);
     c2.adauga(i1);
     cout<<c1;
     cout<<c2;
