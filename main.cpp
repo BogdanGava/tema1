@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-// dark souls = joc in care greutatea inventarului determina orice forma de miscare
 using namespace std;
 class item
 {
@@ -14,6 +13,7 @@ public:
         cout<<nume_item<<" "<<greutate<<'\n';
     }
     item(std::string nume_item="none", float greutate=0);
+    friend ostream& operator<<(ostream&,item&);
     ~item();
 };
 
@@ -33,10 +33,10 @@ class caracter
     vector<item> inventar;
     int level;
     string nume_caracter;
+    float const g=70;
     friend class item;
     string calculare_movement()
     {
-        float const g=70;
         string movement;
         float greutate_totala=0;
         for(int i=0; i<inventar.size(); ++i)
@@ -53,7 +53,7 @@ public:
     {
         inventar.push_back(item);
     }
-    void sterge (item &item)
+    void elimina (item &item)
     {
         for (int i=0; i<inventar.size(); ++i)
             if (inventar[i].nume_item==item.nume_item)
@@ -71,7 +71,12 @@ public:
     caracter &operator =(const caracter &caracter);
     ~caracter();
 };
+std::ostream & operator<<(ostream& os, item& i)
+{
 
+    os<<"nume item="<<i.nume_item<<'\n'<<"greutate="<<i.greutate<<endl;
+    return os;
+}
 caracter::caracter( int level, std::string nume_caracter)
 {
     this->level=level;
@@ -107,13 +112,16 @@ int main()
     caracter c1(12, "Gwyn" );
     caracter c2(50, "Gwyndolyn");
     item i1("Claymore", 35.6);
-    item i2("Frostmourne",35 );
+    item i2("Saw",35 );
     i1.afisare();
+    i2.afisare();
     c1.adauga(i1);
     c1.adauga(i2);
-    c1.sterge(i2);
+    c1.elimina(i2);
     c2.adauga(i1);
     c2.adauga(i1);
+    cout<<i1;
+    cout<<i2;
     cout<<c1;
     cout<<c2;
     return 0;
