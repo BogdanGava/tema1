@@ -47,7 +47,6 @@ class caracter
             movement="normal";
         return movement;
     }
-
 public:
     void adauga(item &item)
     {
