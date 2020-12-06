@@ -25,6 +25,6 @@ int main()
 //    cout<<i2;
     cout<<n1;
     cout<<c1;
-    cout<<c2;
+//    cout<<c2;
     return 0;
 }
