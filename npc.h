@@ -6,7 +6,7 @@ class npc : public caracter
 {
     friend class item;
     std::vector<item>inventar;
-    int level_npc, hp, hostility; //0 = friendly; 1 = ostil;
+    int level_npc, hostility; //0 = friendly; 1 = ostil;
     std::string nume_npc;
 public:
     void interactioneaza (caracter &c, item &item)
