@@ -26,7 +26,7 @@ int main()
 //    cout<<i1;
 //    cout<<i2;
 //    cout<<n1;
-    cout<<c1;
+      cout<<c1;
 //    cout<<c2;
     /* caracterul 1 are level 19 si nu are niciun item in inventar.
      Acesta va interactiona cu npc 1 ce are 2 iteme, din moment ce npc-ul este ostil, iar caracterul are level mai mare va
