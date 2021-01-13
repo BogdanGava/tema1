@@ -27,7 +27,7 @@ class caracter
 protected:
     int level;
 public:
-    void adauga(item &item)
+    virtual void adauga(item &item)
     {
         try
         {
@@ -36,13 +36,13 @@ public:
             else if(item.level_required>level)
                 throw 404;
         }
-        catch(...)
+        catch(int level_required)
         {
             std::cout<<"Caracterul nu are level suficient de mare"<<" "<<item.level_required<<std::endl;
         }
 
     }
-    void elimina (item &item)
+    virtual void elimina (item &item)
     {
         for (unsigned int i=0; i<inventar.size(); ++i)
             if (inventar[i].nume_item==item.nume_item)
