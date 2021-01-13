@@ -6,9 +6,18 @@ class npc : public caracter
 {
     friend class item;
     std::vector<item>inventar;
-    int level_npc, hostility; //0 = friendly; 1 = ostil;
+    int level_npc, hostility; //0 = friendly; 1 = ostil
     std::string nume_npc;
 public:
+    void elimina (item &item) override
+    {
+        inventar.clear();
+    }
+    void adauga (item &item) override
+    {
+        inventar.push_back(item);
+    }
+
     void interactioneaza (caracter &c, item &item)
     {
         try
@@ -16,7 +25,8 @@ public:
             if(hostility==1 && c.level>=level_npc)
             {
                 level_up(c);
-                c.adauga(item);
+                for(int i=0; i<inventar.size(); ++i)
+                    c.adauga(inventar[i]);
                 elimina(item);
             }
             else if(hostility==1 && c.level<level_npc)
